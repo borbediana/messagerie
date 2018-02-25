@@ -5,6 +5,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.company.messagerie.service.RedisService;
 
 import org.springframework.http.ResponseEntity;
+
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,16 +20,25 @@ public class MessageController {
 	@Autowired
 	private RedisService redisService;
 
-    @RequestMapping(value = "/get", method = RequestMethod.POST)
-    public ResponseEntity<MessageRequest> getMessageById(String messageId) {
-        return new ResponseEntity<>(null, HttpStatus.OK);
+    @RequestMapping(value = "/all", method = RequestMethod.GET)
+    public ResponseEntity<List<MessageRequest>> getAllMessages(String messageId) {
+    	
+        return new ResponseEntity<>(redisService.getAllMessages(), HttpStatus.OK);
     }
     
     @RequestMapping(value = "/create", method = RequestMethod.PUT)
     public ResponseEntity<String> createMessage(MessageRequest message) {
     	
-    	redisService.addMessage(message.getMessage(), message.getAuthor());
+    	redisService.addMessage(message);
         return new ResponseEntity<>("", HttpStatus.OK);
     }
-
+    
+    @RequestMapping(value = "/persist", method = RequestMethod.GET)
+    public ResponseEntity<MessageRequest> persistLastMessage(String messageId) {
+    	
+    	MessageRequest lastMessage = redisService.getMessage();
+    	// persist message
+    	
+        return new ResponseEntity<>(lastMessage, HttpStatus.OK);
+    }
 }
