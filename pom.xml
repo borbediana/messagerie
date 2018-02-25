@@ -22,6 +22,26 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
+                <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-aspects</artifactId>
+            </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-aop</artifactId>
+            </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            </dependency>
+
+        <dependency>
+		    <groupId>biz.paluch.redis</groupId>
+		    <artifactId>lettuce</artifactId>
+		    <version>3.2.Final</version>
+		</dependency>
     </dependencies>
 
     <properties>
@@ -30,6 +50,11 @@
 
 
     <build>
+    	<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+			</resource>
+		</resources>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
