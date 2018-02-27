@@ -23,4 +23,6 @@
 		<property name="uri" value="${redisUri}"/>
 	</bean>
 	<bean id="RedisService" class="com.company.messagerie.service.RedisServiceImpl"/>
+
+	<bean id="BusinessService" class="com.company.messagerie.service.BusinessServiceImpl"/>
 </beans>
