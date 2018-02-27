@@ -12,8 +12,8 @@ echo "-----Waiting for services to start!-----"
 sleep 30
 
 # configure cassandra.
-docker cp src/main/resources/statements.sql cassandra-container:/home/
-docker exec -it cassandra-container cqlsh -f /home/statements.sql
+docker cp src/main/resources/statements.sql cassandra-host:/home/
+docker exec -it cassandra-host cqlsh -f /home/statements.sql
 
 # start application
 docker run -p 8080:8080 --detach -t --network=messagerie_internal-network messagerie:1 
