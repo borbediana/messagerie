@@ -1,17 +1,14 @@
 package com.company.messagerie;
 
-import java.util.Arrays;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.boot.CommandLineRunner;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ImportResource;
-
-import com.datastax.driver.core.Cluster;
+import com.company.messagerie.config.ApplicationConfig;
+import com.company.messagerie.config.CassandraConnector;
 import com.datastax.driver.core.Session;
 
 @SpringBootApplication
@@ -19,8 +16,10 @@ import com.datastax.driver.core.Session;
 public class Application {
 	
     final private Boolean cassandraEnabled = true;
-    final private String cassandraHosts = "192.168.0.151";
-    final private String cassandraKeyspace = "mykeyspace";
+	@Value("${spring.data.cassandra.contact-points}")
+	private String cassandraHosts;
+	@Value("${spring.data.cassandra.keyspace-name}")
+	private String cassandraKeyspace;
     
     private static final Logger logger = LoggerFactory.getLogger(Application.class);
 	
@@ -46,8 +45,9 @@ public class Application {
         if (!cassandraEnabled) {
             return null;
         }
-        Cluster cluster = Cluster.builder().addContactPoints(cassandraHosts).build();
-        Session session = cluster.connect(cassandraKeyspace);
-        return session;
+        
+		CassandraConnector client = new CassandraConnector();
+        client.connect(cassandraHosts, null, cassandraKeyspace);
+        return client.getSession();
     }
 }
