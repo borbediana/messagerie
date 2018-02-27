@@ -8,4 +8,5 @@ public interface RedisService {
 	public void addMessage(MessageRequest messageRequest);
 	public List<MessageRequest> getAllMessages();
 	public MessageRequest getMessage();
+	void clean();
 }

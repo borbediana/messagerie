@@ -50,9 +50,15 @@ public class MessageRest {
         return new ResponseEntity<>(businessService.getAllMessages(), HttpStatus.OK);
     }
     
-    @RequestMapping(value = "/allt", method = RequestMethod.GET)
+    @RequestMapping(value = "/all/redis", method = RequestMethod.GET)
     public ResponseEntity<List<MessageRequest>> getAllMessagest() {
     	
         return new ResponseEntity<>(redisService.getAllMessages(), HttpStatus.OK);
+    }
+    
+    @RequestMapping(value = "/clean/redis", method = RequestMethod.DELETE)
+    public ResponseEntity<String> cleanAllMessagesFromRedis() {
+    	redisService.clean();
+        return new ResponseEntity<>("", HttpStatus.OK);
     }
 }
