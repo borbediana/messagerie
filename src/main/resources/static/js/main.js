@@ -69,6 +69,7 @@ function sendMessage(event) {
 
 function sendMessageToRestApi(event) {
 	var messageContent = messageInput.value.trim();
+	var host = location.hostname;
 	var chatMessage = {
 		sender: username,
 		content: messageInput.value,
@@ -76,7 +77,7 @@ function sendMessageToRestApi(event) {
      };
 	
     var xhttp = new XMLHttpRequest();
-    xhttp.open("PUT", "http://localhost:8080/message/create", true);
+    xhttp.open("PUT", "http://" + host + ":8080/message/create", true);
     xhttp.setRequestHeader("Content-type", "application/json");
     xhttp.send(JSON.stringify(chatMessage));
 }
