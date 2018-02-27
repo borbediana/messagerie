@@ -1,0 +1,15 @@
+FROM maven:3.5-jdk-8-alpine as builder
+
+COPY ./ /workspace/
+RUN cd /workspace && mvn clean install -DskipTests
+
+FROM openjdk:8-jre-slim
+
+ENV NONROOT_USER=diana
+ENV CLASSPATH=/workspace
+
+RUN useradd ${NONROOT_USER}
+USER ${NONROOT_USER}
+COPY --from=builder /workspace/target/messagerie-core-0.0.1-SNAPSHOT.jar .
+
+CMD ["java", "-jar", "messagerie-core-0.0.1-SNAPSHOT.jar"]
