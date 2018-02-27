@@ -1,0 +1,25 @@
+version: "3"
+services:
+  application:
+    image: messagerie:1
+    hostname: messagerie-host
+    ports:
+      - "8080:8080"
+    networks:
+      - internal-network
+  redis:
+    image: redis:4
+    hostname: redis-host
+    ports:
+      - "6379:6379"
+    networks:
+      - internal-network
+  cassandra:
+    image: cassandra:3.11
+    hostname: cassandra-host
+    ports:
+      - "9042:9042"
+    networks:
+      - internal-network
+networks:
+  internal-network:
