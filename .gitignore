@@ -2,6 +2,8 @@
 /.settings/
 /.project
 /.classpath
+/.factorypath
+/.apt_generated
 .idea
 *.iml
 logs
