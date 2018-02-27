@@ -3,6 +3,7 @@ services:
   redis:
     image: redis:4
     hostname: redis-host
+    container_name: redis-container
     ports:
       - "6379:6379"
     networks:
@@ -10,6 +11,7 @@ services:
   cassandra:
     image: cassandra:3.11
     hostname: cassandra-host
+    container_name: cassandra-container
     ports:
       - "9042:9042"
     networks:
