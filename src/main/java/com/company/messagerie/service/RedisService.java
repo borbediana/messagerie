@@ -1,7 +1,7 @@
 package com.company.messagerie.service;
 
 import java.util.List;
-import com.company.messagerie.rest.MessageRequest;
+import com.company.messagerie.model.MessageRequest;
 
 public interface RedisService {
 
