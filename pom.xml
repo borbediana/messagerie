@@ -35,12 +35,76 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
-            </dependency>
-
+		</dependency>
+		<dependency>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-jdbc</artifactId>
+		</dependency>
+		
+		<!-- Library to handle Redis connection -->
         <dependency>
 		    <groupId>biz.paluch.redis</groupId>
 		    <artifactId>lettuce</artifactId>
 		    <version>3.2.Final</version>
+		</dependency>
+
+		<!-- Cassandra dependencies -->
+        <dependency>
+            <groupId>com.datastax.cassandra</groupId>
+            <artifactId>cassandra-driver-core</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>commons-codec</groupId>
+            <artifactId>commons-codec</artifactId>
+        </dependency>
+        
+        
+        <!-- Dependencies to handle websocket connections -->
+		<dependency>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-websocket</artifactId>
+		</dependency>
+		 
+		<dependency>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-messaging</artifactId>
+		</dependency>
+		
+		<dependency>
+		    <groupId>com.fasterxml.jackson.core</groupId>
+		    <artifactId>jackson-core</artifactId>
+		</dependency>
+		 
+		<dependency>
+		    <groupId>com.fasterxml.jackson.core</groupId>
+		    <artifactId>jackson-databind</artifactId>
+		</dependency>
+		
+		<!-- Following three dependencies are required for STOMP Broker Relay -->
+		<dependency>
+			<groupId>io.projectreactor</groupId>
+			<artifactId>reactor-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.projectreactor</groupId>
+			<artifactId>reactor-net</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.netty</groupId>
+			<artifactId>netty-all</artifactId>
+			<version>4.1.19.Final</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-configuration-processor</artifactId>
+			<optional>true</optional>
+		</dependency>
+		
+		<!-- Dependency to tests -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
 		</dependency>
     </dependencies>
 
