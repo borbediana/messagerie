@@ -76,10 +76,9 @@ function sendMessageToRestApi(event) {
      };
 	
     var xhttp = new XMLHttpRequest();
-    xhttp.open("PUT", "localhost:8080/message/create", true);
+    xhttp.open("PUT", "http://localhost:8080/message/create", true);
     xhttp.setRequestHeader("Content-type", "application/json");
     xhttp.send(JSON.stringify(chatMessage));
-    var response = JSON.parse(xhttp.responseText);
 }
 
 function onMessageReceived(payload) {
@@ -132,4 +131,5 @@ function getAvatarColor(messageSender) {
 
 
 usernameForm.addEventListener('submit', connect, true)
+messageForm.addEventListener('submit', sendMessageToRestApi, true)
 messageForm.addEventListener('submit', sendMessage, true)
