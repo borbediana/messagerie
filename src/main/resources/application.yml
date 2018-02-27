@@ -1,1 +1,6 @@
-redisUri: redis://192.168.0.151:6379/0
+redisUri: redis://redis-host:6379/0
+spring:
+  data:
+    cassandra:
+      keyspace-name: mykeyspace
+      contact-points: cassandra-host

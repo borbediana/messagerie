@@ -51,7 +51,7 @@ public class MessageRest {
     }
     
     @RequestMapping(value = "/all/redis", method = RequestMethod.GET)
-    public ResponseEntity<List<MessageRequest>> getAllMessagest() {
+    public ResponseEntity<List<MessageRequest>> getAllMessagesRedis() {
     	
         return new ResponseEntity<>(redisService.getAllMessages(), HttpStatus.OK);
     }
