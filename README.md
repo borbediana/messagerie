@@ -1,6 +1,11 @@
 #  Messagerie
 
-This is a Spring Boot application. It handles the processing of messages.
+This is a Spring Boot application. It handles the processing of messages. The application has:
+- API layer
+- business/service layer
+
+Usually, such an application would have also a repository layer. The simplicity of the application allowed me to skip over it.
+
 
 ## Architecture:
 - Java web server, exposing REST API and WebSockets
@@ -24,6 +29,8 @@ Building the Docker image of the application (execute command from current direc
 
 Starting the application and the services it needs (execute command from current directory):
 > ./run.sh
+
+**Why running a script instead starting the application also with docker-compose? The answer is because Cassandra. The official Cassandra image doesn't support script initialization in order to prepare the database for connections. So, I had to decouple the Cassandra initialization from the application startup.**
 
 **The application becomes accessible at http://localhost:8080**
 
