@@ -36,6 +36,11 @@ public class Application {
 			th.printStackTrace();
 		}
 		
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 		// Start Producer/Consumer
 		ApplicationConfig.getInstance();
     }

@@ -3,17 +3,14 @@ package com.company.messagerie.consumer;
 import java.util.concurrent.BlockingQueue;
 import java.util.function.Consumer;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.company.messagerie.model.MessageRequest;
-import com.company.messagerie.service.BusinessService;
 
 public class MessageConsumer<T> {
-	
-	@Autowired
-	public BusinessService businessService;
-	
     private BlockingQueue<MessageRequest> queue;
+    private static final Logger logger = LoggerFactory.getLogger(MessageConsumer.class);
     
     public MessageConsumer(BlockingQueue<MessageRequest> queue) {
         this.queue = queue;
@@ -22,9 +19,9 @@ public class MessageConsumer<T> {
     public void consume(Consumer<MessageRequest> consumer) {
         try {
             consumer.accept(queue.take());
-        } catch (InterruptedException e) {
-        	e.printStackTrace();
-            throw new RuntimeException(e);
+            logger.info("Remove from queue");
+        } catch (Exception e) {
+			logger.error("Supplier can not supply any value to consume!");
         }
     }
 }

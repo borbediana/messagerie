@@ -3,29 +3,35 @@ package com.company.messagerie.producer;
 import java.util.concurrent.BlockingQueue;
 import java.util.function.Supplier;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.company.messagerie.model.MessageRequest;
-import com.company.messagerie.service.RedisService;
 
 public class MessageProducer<T> {
-	
-	@Autowired
-	public RedisService redisService;
-	
 	private BlockingQueue<MessageRequest> queue;
+    private static final Logger logger = LoggerFactory.getLogger(MessageProducer.class);
 
 	public MessageProducer(BlockingQueue<MessageRequest> queue) {
 		this.queue = queue;
 	}
 
 	public void produce(Supplier<MessageRequest> supplier) {
+		if(supplier == null) {
+			logger.info("Supplier is null!");
+			return;
+		}
+		
 		try {
 			final MessageRequest msg = supplier.get();
+			if (msg == null) {
+				return;
+			}
+			
 			queue.put(msg);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-			throw new RuntimeException(e);
+			logger.info("Put in queue" + msg.getContent());
+		} catch (Exception e) {
+			logger.error("Supplier can not supply any value to produce!");
 		}
 	}
 }

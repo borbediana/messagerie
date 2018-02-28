@@ -10,6 +10,7 @@ import javax.annotation.PostConstruct;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.company.messagerie.consumer.MessageConsumer;
 import com.company.messagerie.model.MessageRequest;
@@ -17,40 +18,41 @@ import com.company.messagerie.producer.MessageProducer;
 import com.company.messagerie.service.BusinessService;
 import com.company.messagerie.service.RedisService;
 
+@Component
 public class ApplicationConfig {
 
 	@Autowired
-	public static RedisService redisService;
+	private RedisService redisService;
 	@Autowired
-	public static BusinessService businessService;
+	private BusinessService businessService;
 	
-	private static final int MESSAGES_NUMBER = 100;
+	private static final int MESSAGES_NUMBER = 10;
     private static ApplicationConfig instance;
     private static final Logger logger = LoggerFactory.getLogger(ApplicationConfig.class);
     
 	private static final BlockingQueue<MessageRequest> queue = new ArrayBlockingQueue<>(MESSAGES_NUMBER);
     
     private ApplicationConfig(){
+    	init();
     }
     
     @PostConstruct
-    private static void init() {
+    private void init() {
+    	logger.info("Starting producer and consumer threads!");
     	startProducer();
     	startConsumer();
-    	logger.info("Producer and cosumer threads were started!");
     }
     
     public static synchronized ApplicationConfig getInstance(){
         if(instance == null){
             instance = new ApplicationConfig();
-//            init();
         }
         return instance;
     }
 
-	private static void startProducer() {
+	private void startProducer() {
 		final MessageProducer<MessageRequest> messageProducer = new MessageProducer<>(queue);
-		final Supplier<MessageRequest> supplier = () -> redisService.getMessage();
+		final Supplier<MessageRequest> supplier = redisService::getMessage;
 		new Thread(() -> {
 			for (int i = 0; i < MESSAGES_NUMBER; i++) {
 				messageProducer.produce(supplier);
@@ -58,9 +60,9 @@ public class ApplicationConfig {
 		}).start();
 	}
     
-    private static void startConsumer() {
+    private void startConsumer() {
         final MessageConsumer<MessageRequest> messageConsumer = new MessageConsumer<>(queue);
-        final Consumer<MessageRequest> consumer = (s) -> businessService.persistMessage(s);
+        final Consumer<MessageRequest> consumer = businessService::persistMessage;
         
         new Thread(() -> {
             for (int i = 0; i < MESSAGES_NUMBER; i++) {
