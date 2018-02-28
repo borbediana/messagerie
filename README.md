@@ -8,9 +8,9 @@ This is a Spring Boot application. It handles the processing of messages.
 - Cassandra DB to persist the messages
 
 ## Flow
-A user logs into application. Then he can send a message. The message is send on server through REST call. All the other users logged in are receiving the new message through websockets.
+A user logs into application. He can send a message. The message is sent on server through REST call. All the other users logged in are receiving the new message through websockets.
 
-When calling create REST enpoint, the message is stored in Redis. A producer thread is reading from Redis and adding messages in queue. A consumer is taking messages from queue and persisting them to Cassandra DB.
+When the message created from UI is first stored in Redis. A producer thread is reading from Redis and adding messages in queue. A consumer is taking messages from queue and persisting them to Cassandra DB.
 
 ## Execution
 
@@ -29,13 +29,13 @@ Starting the application and the services it needs (execute command from current
 
 
 ## REST endpoints
-- PUT /create  - creates a new entry in Redis.  It requires a request body, example:
+- PUT /create  - creates a new entry in Redis. It requires body, example:
 	> {
         "type": "CHAT",
         "content": "Hello from here!",
         "sender": "Caroline"
     }
-- GET /persist - removed the last entry from Redis and persists it to Cassandra
+- GET /persist - removes the last entry from Redis and persists it to Cassandra
 - GET /all - gets all the entries from Cassandra
 - GET /all/redis - gets all the entries from Redis
 - DELETE /clean/redis - removes all the entries from Redis
