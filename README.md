@@ -28,4 +28,25 @@ Starting the application and the services it needs (execute command from current
 **The application becomes accessible at http://localhost:8080**
 
 
+## REST endpoints
+- PUT /create  - creates a new entry in Redis.  It requires a request body, example:
+	> {
+        "type": "CHAT",
+        "content": "Hello from here!",
+        "sender": "Caroline"
+    }
+- GET /persist - removed the last entry from Redis and persists it to Cassandra
+- GET /all - gets all the entries from Cassandra
+- GET /all/redis - gets all the entries from Redis
+- DELETE /clean/redis - removes all the entries from Redis
+
+## WebSockets
+ -     sendMessage - when a user sends a message, all the others are notified
+	 - @MessageMapping("/chat.sendMessage")
+	 - @SendTo("/topic/public")
+ -     addUser - when a user logges in, all the others are notified
+	- @MessageMapping("/chat.addUser")
+	- @SendTo("/topic/public")
+
+
 > Credit to https://github.com/callicoder/spring-boot-websocket-chat-demo for big part of the UI
